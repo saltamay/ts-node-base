@@ -4,9 +4,12 @@
   "description": "Node.js Typescript backend project base setup",
   "main": "index.ts",
   "scripts": {
-    "build": "rm -rf ./dist && tsc -p tsconfig.prod.json",
+    "clean": "rimraf coverage dist tmp",
+    "prebuild": "npm run lint",
+    "build": "npm run clean && npm run prebuild && tsc -p tsconfig.prod.json",
     "dev": "nodemon",
     "prod": "npm run build && node -r ts-node/register/transpile-only -r tsconfig-paths/register ./dist/index.js",
+    "lint": "eslint . --ext .ts,.tsx",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
